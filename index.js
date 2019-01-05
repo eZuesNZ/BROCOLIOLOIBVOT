@@ -37,6 +37,21 @@ fs.readdir('./cmds', (err,files) => {
     })
 })
 
+let validation = function(serverRoles, userRoles){
+    let val = false;
+    serverRoles.forEach((role) => {
+        userRoles.forEach((usr) => {
+            if (role == usr){
+                val = true;
+            }
+        });
+    });
+    return val;
+}
+
+
+
+
 bot.on('ready', async () => {
     console.log("Hello, im ready");
 });
@@ -51,12 +66,17 @@ bot.on("message",msg => {
 
     if (!command.startsWith(prefix)) return;
 
-    if (bot.commands.get(command.slice(prefix.length))){
+    if (validation(allowedRoles.roles,msg.member.roles.array()) || msg.member.id === owner){
         let cmd = bot.commands.get(command.slice(prefix.length));
         if (cmd){
-            cmd.run(bot,msg,args)
-        }
+            cmd.run(bot,msg,args);
+                  
+            
     }
+        
+    }else {
+        msg.channel.send("Hey you, you dont have access to this bot command")
+    } 
 
 });
 
