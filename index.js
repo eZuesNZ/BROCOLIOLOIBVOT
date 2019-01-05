@@ -66,19 +66,21 @@ bot.on("message",msg => {
 
     if (!command.startsWith(prefix)) return;
 
-    if (validation(allowedRoles.roles.msg.member.roles.array()) || msg.member.id === owner){
+    if (validation(allowedRoles.roles,msg.member.roles.array()) || msg.member.id === owner){
         let cmd = bot.commands.get(command.slice(prefix.length));
         if (cmd){
-            cmd.run(bot,msg,args);
-                  
-            
-    }
-        
+            cmd.run(bot,msg,args);            
+        }    
     }else {
         msg.channel.send("Hey you, you dont have access to this bot command")
     } 
 
 });
+
+
+
+
+
 
 bot.on('error', err => {
     console.log(err);
