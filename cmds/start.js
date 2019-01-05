@@ -77,8 +77,14 @@ module.exports.run = async (bot, message, args) => {
     collector.on('collect', m => {
  
         console.log(`Collected ${m.content} | ${m.author.username}`);
-       
-       
+        
+        if (validation(allowedRoles.roles,msg.member.roles.array())){
+            if (m.content === "!start"){
+                collector.stop();
+                console.log("Collector stopped")
+                return;
+            }
+        }
         if (game.data.length === 0 && m.content.length === 3){
             game.addID(m.content.toUpperCase(), m.author.username);
         }else if (m.content.length === 3){
