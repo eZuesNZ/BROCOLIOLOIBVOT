@@ -37,12 +37,15 @@ fs.readdir('./cmds', (err,files) => {
     })
 })
 
+let raw = fs.readFileSync('./roles.json');
+let allowedRoles = JSON.parse(raw);
+
 let validation = function(serverRoles, userRoles){
     let val = false;
     serverRoles.forEach((role) => {
         userRoles.forEach((usr) => {
             if (role == usr){
-                val = true;
+                val = true
             }
         });
     });
